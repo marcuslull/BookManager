@@ -1,3 +1,52 @@
+## DB SCHEMA
+
+### Books
+ID PK - LONG  
+Title - VARCHAR  
+Pages - INTEGER  
+Number in series - INTEGER  
+Finished - BOOLEAN  
+Media - VARCHAR  
+Rating ID FK - LONG  
+Author IDs FK - LONG  
+Genre IDs FK - LONG  
+Series ID FK - LONG  
+
+### Authors
+ID PK - LONG  
+Name - VARCHAR  
+Book IDs FK - LONG  
+Series IDs FK - LONG  
+
+### Genres
+ID PK - LONG  
+Genre - VARCHAR  
+
+### Series
+ID PK - LONG  
+Name - VARCHAR  
+Size - INTEGER  
+Finished - BOOLEAN  
+Book IDs FK - LONG  
+Author IDs FK - LONG  
+Genre IDs FK - LONG  
+
+### Comments
+ID PK - LONG  
+Title - VARCHAR  
+Comment - VARCHAR  
+
+### Rating
+ID PK - LONG  
+Rating - INTEGER  
+
+
+## ENTITIES
+
+
+
+
+
 Concept: Book Management API with Advanced Search (Focus on Well-designed REST API)
 
 Functionality:
@@ -41,3 +90,6 @@ Further Enhancements (API Focus):
 Implement HATEOAS with pagination for handling large datasets of books.
 Introduce versioning for your API to handle future updates.
 Add filtering capabilities to search results based on additional criteria (e.g., minimum rating).
+
+
+
