@@ -4,23 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.hateoas.Link;
 import org.springframework.validation.ObjectError;
 
 import java.util.*;
 
 @Getter
 @Setter
-public class ApiErrorResponse implements ApiResponse {
-    private String status = "error";
-
-    @JsonIgnore
-    private List<ObjectError> errors;
-
+public class ApiErrorResponse extends ApiResponse {
     private List<String> errorMessages;
 
-    public ApiErrorResponse(List<ObjectError> errors) {
-        this.errors = errors;
-
+    public ApiErrorResponse(Link path, List<ObjectError> errors) {
+        super("Error", path);
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {
             this.errorMessages.add(error.getDefaultMessage());

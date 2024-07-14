@@ -31,10 +31,10 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<ApiResponse> postBook(@Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new ApiErrorResponse(bindingResult.getAllErrors()));
-        }
         Link link = linkTo(BookController.class).withSelfRel();
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new ApiErrorResponse(link, bindingResult.getAllErrors()));
+        }
         List<Book> books = bookDtos.stream().map(Book::fromDTO).toList();
         return ResponseEntity.ok().body(new ApiSuccessResponse<>(link, bookRepository.saveAll(books)));
     }
