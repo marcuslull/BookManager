@@ -3,7 +3,10 @@ package com.marcuslull.bookmanager.controllers;
 import com.marcuslull.bookmanager.dtos.BookDto;
 import com.marcuslull.bookmanager.entities.Book;
 import com.marcuslull.bookmanager.repositories.BookRepository;
+import jakarta.validation.Valid;
 import org.springframework.hateoas.Link;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,9 +30,12 @@ public class BookController {
     }
 
     @PostMapping("/books")
-    public ApiResponse postBook(@RequestBody List<BookDto> bookDtos) {
+    public ResponseEntity<ApiResponse> postBook(@Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(new ApiErrorResponse(bindingResult.getAllErrors()));
+        }
         Link link = linkTo(BookController.class).withSelfRel();
         List<Book> books = bookDtos.stream().map(Book::fromDTO).toList();
-        return new ApiSuccessResponse<>(link, bookRepository.saveAll(books));
+        return ResponseEntity.ok().body(new ApiSuccessResponse<>(link, bookRepository.saveAll(books)));
     }
 }
