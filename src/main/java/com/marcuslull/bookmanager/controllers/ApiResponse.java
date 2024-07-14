@@ -11,8 +11,8 @@ import java.util.Date;
 @Setter
 public abstract class ApiResponse {
     protected Date timestamp = Date.from(Instant.now());
-    protected String status;
     protected Link path;
+    protected String status;
 
     protected ApiResponse(String status, Link path) {
         this.status = status;

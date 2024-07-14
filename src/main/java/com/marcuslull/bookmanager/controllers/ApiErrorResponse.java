@@ -1,13 +1,13 @@
 package com.marcuslull.bookmanager.controllers;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.hateoas.Link;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,7 +18,13 @@ public class ApiErrorResponse extends ApiResponse {
         super("Error", path);
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {
-            this.errorMessages.add(error.getDefaultMessage());
+            if (error instanceof FieldError fieldError) {
+                String field = fieldError.getField();
+                String defaultMessage = fieldError.getDefaultMessage();
+                this.errorMessages.add(field + " " + defaultMessage);
+            } else {
+                this.errorMessages.add(error.getDefaultMessage());
+            }
         }
     }
 }

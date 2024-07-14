@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -25,17 +26,19 @@ public class BookController {
 
     @GetMapping("/books")
     public ApiResponse getBooks() {
-        Link link = linkTo(BookController.class).withSelfRel();
-        return new ApiSuccessResponse<>(link, bookRepository.findAll());
+        return new ApiSuccessResponse<>(getPath(), bookRepository.findAll());
     }
 
     @PostMapping("/books")
-    public ResponseEntity<ApiResponse> postBook(@Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
-        Link link = linkTo(BookController.class).withSelfRel();
+    public ResponseEntity<ApiResponse> postBooks(@Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new ApiErrorResponse(link, bindingResult.getAllErrors()));
+            return ResponseEntity.badRequest().body(new ApiErrorResponse(getPath(), bindingResult.getAllErrors()));
         }
         List<Book> books = bookDtos.stream().map(Book::fromDTO).toList();
-        return ResponseEntity.ok().body(new ApiSuccessResponse<>(link, bookRepository.saveAll(books)));
+        return ResponseEntity.ok().body(new ApiSuccessResponse<>(getPath(), bookRepository.saveAll(books)));
+    }
+
+    private Link getPath(){
+        return linkTo(methodOn(BookController.class).getBooks()).withSelfRel();
     }
 }
