@@ -1,4 +1,4 @@
-package com.marcuslull.bookmanager.controllers;
+package com.marcuslull.bookmanager.entities;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -11,10 +11,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ApiErrorResponse extends ApiResponse {
+public class ApiErrorResponseEntity extends ApiResponseEntity {
     private List<String> errorMessages;
 
-    public ApiErrorResponse(HttpServletRequest request, List<ObjectError> errors) {
+    public ApiErrorResponseEntity(HttpServletRequest request, List<ObjectError> errors) {
         super("Error", request);
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {
