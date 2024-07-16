@@ -1,8 +1,8 @@
 package com.marcuslull.bookmanager.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.Link;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -14,8 +14,8 @@ import java.util.List;
 public class ApiErrorResponse extends ApiResponse {
     private List<String> errorMessages;
 
-    public ApiErrorResponse(Link path, List<ObjectError> errors) {
-        super("Error", path);
+    public ApiErrorResponse(HttpServletRequest request, List<ObjectError> errors) {
+        super("Error", request);
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {
             if (error instanceof FieldError fieldError) {

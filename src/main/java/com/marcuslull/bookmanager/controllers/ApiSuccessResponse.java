@@ -1,16 +1,16 @@
 package com.marcuslull.bookmanager.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.Link;
 
 @Getter
 @Setter
 public class ApiSuccessResponse<T> extends ApiResponse {
     private T data;
 
-    public ApiSuccessResponse(Link path, T data) {
-        super("Success", path);
+    public ApiSuccessResponse(HttpServletRequest request, T data) {
+        super("Success", request);
         this.data = data;
     }
 }

@@ -1,8 +1,8 @@
 package com.marcuslull.bookmanager.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.hateoas.Link;
 
 import java.time.Instant;
 import java.util.Date;
@@ -11,11 +11,13 @@ import java.util.Date;
 @Setter
 public abstract class ApiResponse {
     protected Date timestamp = Date.from(Instant.now());
-    protected Link path;
+    protected String method;
+    protected String path;
     protected String status;
 
-    protected ApiResponse(String status, Link path) {
+    protected ApiResponse(String status, HttpServletRequest request) {
+        this.method = request.getMethod();
+        this.path = request.getRequestURI();
         this.status = status;
-        this.path = path;
     }
 }
