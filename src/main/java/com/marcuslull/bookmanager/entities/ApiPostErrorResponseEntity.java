@@ -11,10 +11,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ApiErrorResponseEntity extends ApiResponseEntity {
+public class ApiPostErrorResponseEntity extends ApiResponseEntity {
     private List<String> errorMessages;
 
-    public ApiErrorResponseEntity(HttpServletRequest request, List<ObjectError> errors) {
+    public ApiPostErrorResponseEntity(HttpServletRequest request, List<ObjectError> errors) {
         super("Error", request);
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {

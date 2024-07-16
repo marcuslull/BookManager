@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public abstract class ApiResponseEntity {
+public class ApiResponseEntity {
     protected Date timestamp;
     protected String requestId;
     protected String clientIp;
@@ -21,7 +21,7 @@ public abstract class ApiResponseEntity {
     protected String path;
     protected String status;
 
-    protected ApiResponseEntity(String status, HttpServletRequest request) {
+    public ApiResponseEntity(String status, HttpServletRequest request) {
         this.timestamp  = Date.from(Instant.now());
         this.requestId = request.getRequestId();
         this.clientIp = request.getRemoteAddr();
