@@ -1,13 +1,16 @@
 package com.marcuslull.bookmanager.dtos;
 
 
-import com.marcuslull.bookmanager.entities.Book;
-import jakarta.validation.constraints.*;
+import com.marcuslull.bookmanager.entities.BookEntity;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 
 /**
- * DTO for {@link Book}
+ * DTO for {@link BookEntity}
  */
 public record BookDto(
         @NotNull @Size(min = 2, max = 50) String title,

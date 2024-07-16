@@ -51,8 +51,8 @@ Concept: Book Management API with Advanced Search (Focus on Well-designed REST A
 
 Functionality:
 
-Users can Create, Read, Update, and Delete books through the API.
-Implement functionalities for searching books based on various criteria:
+Users can Create, Read, Update, and Delete bookEntities through the API.
+Implement functionalities for searching bookEntities based on various criteria:
 Title (fuzzy search optional)
 Author (fuzzy search optional)
 Genre (with pre-defined genres or user-defined)
@@ -68,7 +68,7 @@ REST API Design:
 
 Follow RESTful principles strictly:
 Use appropriate HTTP methods for CRUD operations (POST, GET, PUT, DELETE)
-Use descriptive URLs to represent resources (e.g., /books, /books/{id})
+Use descriptive URLs to represent resources (e.g., /bookEntities, /bookEntities/{id})
 Implement proper data validation and informative error handling with HTTP status codes.
 Use JSON for data exchange with the API.
 Implement HATEOAS to provide links to related resources in response messages. This allows clients to discover available actions and navigate the API dynamically.
@@ -87,7 +87,7 @@ Advanced search functionality demonstrates your ability to handle complex querie
 Unit and integration tests highlight your focus on building robust and reliable APIs.
 Further Enhancements (API Focus):
 
-Implement HATEOAS with pagination for handling large datasets of books.
+Implement HATEOAS with pagination for handling large datasets of bookEntities.
 Introduce versioning for your API to handle future updates.
 Add filtering capabilities to search results based on additional criteria (e.g., minimum rating).
 

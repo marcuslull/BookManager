@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "books")
-public class Book {
+public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,16 +26,16 @@ public class Book {
     @Column
     private Boolean finished;
 
-    public Book() {};
+    public BookEntity() {};
 
-    public Book(String title, Integer pages, Integer bookNumber, Boolean finished) {
+    public BookEntity(String title, Integer pages, Integer bookNumber, Boolean finished) {
         this.title = title;
         this.pages = pages;
         this.bookNumber = bookNumber;
         this.finished = finished;
     }
 
-    public Book(Long id, String title, Integer pages, Integer bookNumber, Boolean finished) {
+    public BookEntity(Long id, String title, Integer pages, Integer bookNumber, Boolean finished) {
         this.id = id;
         this.title = title;
         this.pages = pages;
@@ -43,11 +43,11 @@ public class Book {
         this.finished = finished;
     }
 
-    public static Book fromDTO(BookDto bookDto) {
-        return new Book(bookDto.title(), bookDto.pages(), bookDto.bookNumber(), bookDto.finished());
+    public static BookEntity fromDTO(BookDto bookDto) {
+        return new BookEntity(bookDto.title(), bookDto.pages(), bookDto.bookNumber(), bookDto.finished());
     }
 
-    public static BookDto toDto(Book book) {
-        return new BookDto(book.getTitle(), book.getPages(), book.getBookNumber(),book.getFinished());
+    public static BookDto toDto(BookEntity bookEntity) {
+        return new BookDto(bookEntity.getTitle(), bookEntity.getPages(), bookEntity.getBookNumber(), bookEntity.getFinished());
     }
 }
