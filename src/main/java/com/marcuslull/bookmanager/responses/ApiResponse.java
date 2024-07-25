@@ -1,4 +1,4 @@
-package com.marcuslull.bookmanager.entities;
+package com.marcuslull.bookmanager.responses;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class ApiResponseEntity {
+public class ApiResponse {
     protected Date timestamp;
     protected String requestId;
     protected String clientIp;
@@ -21,7 +21,7 @@ public class ApiResponseEntity {
     protected String path;
     protected String status;
 
-    public ApiResponseEntity(String status, HttpServletRequest request) {
+    public ApiResponse(String status, HttpServletRequest request) {
         this.timestamp  = Date.from(Instant.now());
         this.requestId = request.getRequestId();
         this.clientIp = request.getRemoteAddr();

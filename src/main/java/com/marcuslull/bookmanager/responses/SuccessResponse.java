@@ -1,4 +1,4 @@
-package com.marcuslull.bookmanager.entities;
+package com.marcuslull.bookmanager.responses;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
@@ -6,10 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ApiSuccessResponseEntity<T> extends ApiResponseEntity {
+public class SuccessResponse<T> extends ApiResponse {
     private T data;
 
-    public ApiSuccessResponseEntity(HttpServletRequest request, T data) {
+    public SuccessResponse(HttpServletRequest request, T data) {
         super("Success", request);
         this.data = data;
     }
