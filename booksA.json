@@ -1,0 +1,142 @@
+[
+  {
+    "title": "The Great Gatsby",
+    "pages": 180,
+    "bookNumber": 1,
+    "author": "F. Scott Fitzgerald",
+    "finished": true
+  },
+  {
+    "title": "To Kill a Mockingbird",
+    "pages": 336,
+    "bookNumber": 2,
+    "author": "Harper Lee",
+    "finished": true
+  },
+  {
+    "title": "Pride and Prejudice",
+    "pages": 246,
+    "bookNumber": 3,
+    "author": "Jane Austen",
+    "finished": false
+  },
+  {
+    "title": "War and Peace",
+    "pages": 1296,
+    "bookNumber": 4,
+    "author": "Leo Tolstoy",
+    "finished": true
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "pages": 224,
+    "bookNumber": 5,
+    "author": "J.D. Salinger",
+    "finished": true
+  },
+  {
+    "title": "Don Quixote",
+    "pages": 1056,
+    "bookNumber": 6,
+    "author": "Miguel de Cervantes",
+    "finished": true
+  },
+  {
+    "title": "Gone with the Wind",
+    "pages": 467,
+    "bookNumber": 7,
+    "author": "Margaret Mitchell",
+    "finished": false
+  },
+  {
+    "title": "The Lord of the Rings",
+    "pages": 1266,
+    "bookNumber": 8,
+    "author": "J.R.R. Tolkien",
+    "finished": true
+  },
+  {
+    "title": "Ulysses",
+    "pages": 734,
+    "bookNumber": 9,
+    "author": "James Joyce",
+    "finished": true
+  },
+  {
+    "title": "The Hunchback of Notre Dame",
+    "pages": 288,
+    "bookNumber": 10,
+    "author": "Victor Hugo",
+    "finished": false
+  },
+  {
+    "title": "Moby-Dick",
+    "pages": 576,
+    "bookNumber": 11,
+    "author": "Herman Melville",
+    "finished": false
+  },
+  {
+    "title": "Hamlet",
+    "pages": 432,
+    "bookNumber": 12,
+    "author": "William Shakespeare",
+    "finished": true
+  },
+  {
+    "title": "The Odyssey",
+    "pages": 416,
+    "bookNumber": 13,
+    "author": "Homer",
+    "finished": true
+  },
+  {
+    "title": "The Divine Comedy",
+    "pages": 928,
+    "bookNumber": 14,
+    "author": "Dante Alighieri",
+    "finished": true
+  },
+  {
+    "title": "A Tale of Two Cities",
+    "pages": 582,
+    "bookNumber": 15,
+    "author": "Charles Dickens",
+    "finished": false
+  },
+  {
+    "title": "Madame Bovary",
+    "pages": 480,
+    "bookNumber": 16,
+    "author": "Gustave Flaubert",
+    "finished": false
+  },
+  {
+    "title": "1984",
+    "pages": 328,
+    "bookNumber": 17,
+    "author": "George Orwell",
+    "finished": true
+  },
+  {
+    "title": "The Brothers Karamazov",
+    "pages": 843,
+    "bookNumber": 18,
+    "author": "Fyodor Dostoevsky",
+    "finished": false
+  },
+  {
+    "title": "The Scarlet Letter",
+    "pages": 267,
+    "bookNumber": 19,
+    "author": "Nathaniel Hawthorne",
+    "finished": true
+  },
+  {
+    "title": "The Adventures of Huckleberry Finn",
+    "pages": 320,
+    "bookNumber": 20,
+    "author": "Mark Twain",
+    "finished": true
+  }
+]

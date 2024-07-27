@@ -1,0 +1,142 @@
+[
+  {
+    "title": "To Kill a Mockingbird",
+    "pages": 336,
+    "bookNumber": 1,
+    "author": "Harper Lee",
+    "finished": true
+  },
+  {
+    "title": "1984",
+    "pages": 328,
+    "bookNumber": 2,
+    "author": "George Orwell",
+    "finished": true
+  },
+  {
+    "title": "Pride and Prejudice",
+    "pages": 226,
+    "bookNumber": 3,
+    "author": "Jane Austen",
+    "finished": false
+  },
+  {
+    "title": "The Great Gatsby",
+    "pages": 180,
+    "bookNumber": 4,
+    "author": "F. Scott Fitzgerald",
+    "finished": true
+  },
+  {
+    "title": "Brave New World",
+    "pages": 320,
+    "bookNumber": 5,
+    "author": "Aldous Huxley",
+    "finished": true
+  },
+  {
+    "title": "In Search of Lost Time",
+    "pages": 1344,
+    "bookNumber": 6,
+    "author": "Marcel Proust",
+    "finished": false
+  },
+  {
+    "title": "The Adventures of Huckleberry Finn",
+    "pages": 352,
+    "bookNumber": 7,
+    "author": "Mark Twain",
+    "finished": true
+  },
+  {
+    "title": "Ulysses",
+    "pages": 208,
+    "bookNumber": 8,
+    "author": "James Joyce",
+    "finished": false
+  },
+  {
+    "title": "The Odyssey",
+    "pages": 128,
+    "bookNumber": 9,
+    "author": "Homer",
+    "finished": true
+  },
+  {
+    "title": "Hamlet",
+    "pages": 432,
+    "bookNumber": 10,
+    "author": "William Shakespeare",
+    "finished": true
+  },
+  {
+    "title": "Don Quixote",
+    "pages": 1056,
+    "bookNumber": 11,
+    "author": "Miguel de Cervantes",
+    "finished": false
+  },
+  {
+    "title": "The Picture of Dorian Gray",
+    "pages": 224,
+    "bookNumber": 12,
+    "author": "Oscar Wilde",
+    "finished": true
+  },
+  {
+    "title": "Heart of Darkness",
+    "pages": 192,
+    "bookNumber": 13,
+    "author": "Joseph Conrad",
+    "finished": true
+  },
+  {
+    "title": "The Catcher in the Rye",
+    "pages": 256,
+    "bookNumber": 14,
+    "author": "J.D Salinger",
+    "finished": true
+  },
+  {
+    "title": "Moby-Dick",
+    "pages": 672,
+    "bookNumber": 15,
+    "author": "Herman Melville",
+    "finished": false
+  },
+  {
+    "title": "The Adventures of Sherlock Holmes",
+    "pages": 480,
+    "bookNumber": 16,
+    "author": "Arthur Conan Doyle",
+    "finished": true
+  },
+  {
+    "title": "The Metamorphosis",
+    "pages": 128,
+    "bookNumber": 17,
+    "author": "Franz Kafka",
+    "finished": true
+  },
+  {
+    "title": "The Divine Comedy",
+    "pages": 928,
+    "bookNumber": 18,
+    "author": "Dante Alighieri",
+    "finished": false
+  },
+  {
+    "title": "War and Peace",
+    "pages": 1296,
+    "bookNumber": 19,
+    "author": "Leo Tolstoy",
+    "finished": false
+  },
+  {
+    "title": "The Grapes of Wrath",
+    "pages": 480,
+    "bookNumber": 20,
+    "author": "John Steinbeck",
+    "finished": true
+  }
+]
