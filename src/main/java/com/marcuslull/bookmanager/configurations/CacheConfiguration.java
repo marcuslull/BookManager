@@ -19,7 +19,7 @@ public class CacheConfiguration  implements CachingConfigurer {
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager("caffeine");
         cacheManager.registerCustomCache("books", Caffeine.newBuilder()
-                        .expireAfterAccess(Duration.ofHours(1))
+                        .expireAfterAccess(Duration.ofMinutes(10))
                         .buildAsync());
         return cacheManager;
     }

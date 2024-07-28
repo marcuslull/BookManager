@@ -2,10 +2,10 @@ package com.marcuslull.bookmanager.controllers;
 
 import com.marcuslull.bookmanager.dtos.BookDto;
 import com.marcuslull.bookmanager.entities.BookEntity;
-import com.marcuslull.bookmanager.repositories.BookRepository;
 import com.marcuslull.bookmanager.responses.ApiResponse;
 import com.marcuslull.bookmanager.responses.PostErrorResponse;
 import com.marcuslull.bookmanager.responses.SuccessResponse;
+import com.marcuslull.bookmanager.services.BookService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +18,20 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class BookController {
 
-    private final BookRepository bookRepository;
+    private final BookService bookService;
 
-    public BookController(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public BookController(BookService bookService) {
+        this.bookService = bookService;
     }
 
     @GetMapping("/books")
     public ResponseEntity<?> getBooks(HttpServletRequest request) {
-        return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookRepository.findAll()));
+        return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAll()));
     }
 
     @GetMapping("/books/{id}")
     public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable Long id) {
-        BookEntity bookEntity = bookRepository.findById(id).orElse(null);
+        BookEntity bookEntity = bookService.findById(id);
         return (bookEntity == null) ?
                 ResponseEntity.status(404).body(new ApiResponse("Not Found", request)) :
                 ResponseEntity.status(200).body(new SuccessResponse<>(request, bookEntity));
@@ -42,7 +42,6 @@ public class BookController {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.status(400).body(new PostErrorResponse(request, bindingResult.getAllErrors()));
         }
-        List<BookEntity> bookEntities = bookDtos.stream().map(BookEntity::fromDto).toList();
-        return ResponseEntity.status(201).body(new SuccessResponse<>(request, bookRepository.saveAll(bookEntities)));
+        return ResponseEntity.status(201).body(new SuccessResponse<>(request, bookService.saveAll(bookDtos)));
     }
 }
