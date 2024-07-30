@@ -1,5 +1,6 @@
 package com.marcuslull.bookmanager.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marcuslull.bookmanager.dtos.BookDto;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -33,11 +34,17 @@ public class BookEntity {
     @Column
     private Boolean finished;
 
+    @JsonIgnore
+    @Column
+    private String dedupeId;
+
     public BookEntity(String title, Integer pages, Integer bookNumber, Boolean finished) {
         this.title = title;
         this.pages = pages;
         this.bookNumber = bookNumber;
         this.finished = finished;
+
+        dedupeId = this.title + this.pages.toString();
     }
 
     public static BookEntity fromDto(@Valid BookDto bookDto) {

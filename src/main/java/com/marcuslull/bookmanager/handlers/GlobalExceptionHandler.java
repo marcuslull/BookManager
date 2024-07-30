@@ -1,5 +1,7 @@
 package com.marcuslull.bookmanager.handlers;
 
+import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
+import com.marcuslull.bookmanager.responses.ApiResponse;
 import com.marcuslull.bookmanager.responses.UnexpectedExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,13 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DuplicateEntityException.class)
+    public ResponseEntity<?> handleDuplicateEntityException(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(ex.getMessage(), request));
+    }
 
     @ExceptionHandler({NoResourceFoundException.class, MethodArgumentTypeMismatchException.class})
     public ResponseEntity<?> handleNoResourceFoundException(NoResourceFoundException ex) {
