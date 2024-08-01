@@ -6,6 +6,7 @@ import com.marcuslull.bookmanager.responses.ApiResponse;
 import com.marcuslull.bookmanager.responses.PostErrorResponse;
 import com.marcuslull.bookmanager.responses.SuccessResponse;
 import com.marcuslull.bookmanager.services.BookService;
+import com.marcuslull.bookmanager.services.RateLimitService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +20,25 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final RateLimitService rateLimitService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, RateLimitService rateLimitService) {
         this.bookService = bookService;
+        this.rateLimitService = rateLimitService;
     }
 
     @GetMapping("/books")
     public ResponseEntity<?> getBooks(HttpServletRequest request) {
-        return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAll()));
+        return (rateLimitService.isLimited(request)) ?
+                ResponseEntity.status(429).body(new ApiResponse("Too Many Requests", request)) :
+                ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAll()));
     }
 
     @GetMapping("/books/{id}")
     public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable Long id) {
+        if (rateLimitService.isLimited(request)) {
+            return ResponseEntity.status(429).body(new ApiResponse("Too Many Requests", request));
+        }
         BookEntity bookEntity = bookService.findById(id);
         return (bookEntity == null) ?
                 ResponseEntity.status(404).body(new ApiResponse("Not Found", request)) :
@@ -39,14 +47,19 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<?> postBooks(HttpServletRequest request, @Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(400).body(new PostErrorResponse(request, bindingResult.getAllErrors()));
+        if (rateLimitService.isLimited(request)) {
+            return ResponseEntity.status(429).body(new ApiResponse("Too Many Requests", request));
         }
-        return ResponseEntity.status(201).body(new SuccessResponse<>(request, bookService.saveAll(bookDtos)));
+        return (bindingResult.hasErrors()) ?
+                ResponseEntity.status(400).body(new PostErrorResponse(request, bindingResult.getAllErrors())) :
+                ResponseEntity.status(201).body(new SuccessResponse<>(request, bookService.saveAll(bookDtos)));
     }
 
     @DeleteMapping("/books/{id}")
-    public ResponseEntity<?> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<?> deleteBook(HttpServletRequest request, @PathVariable Long id) {
+        if (rateLimitService.isLimited(request)) {
+            return ResponseEntity.status(429).body(new ApiResponse("Too Many Requests", request));
+        }
         bookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
