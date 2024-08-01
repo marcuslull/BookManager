@@ -1,6 +1,7 @@
 package com.marcuslull.bookmanager.handlers;
 
 import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
+import com.marcuslull.bookmanager.exceptions.RequestLimitExceededException;
 import com.marcuslull.bookmanager.responses.ApiResponse;
 import com.marcuslull.bookmanager.responses.UnexpectedExceptionResponse;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,13 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(RequestLimitExceededException.class)
+    public ResponseEntity<?> handleRequestLimitExceededException(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(new ApiResponse(ex.getMessage(), request));
+    }
 
     @ExceptionHandler(DuplicateEntityException.class)
     public ResponseEntity<?> handleDuplicateEntityException(Exception ex) {
