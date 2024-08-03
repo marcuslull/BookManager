@@ -11,10 +11,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PostErrorResponse extends ApiResponse {
+public class PostFieldErrorResponse extends ApiResponse {
     private List<String> errorMessages;
 
-    public PostErrorResponse(HttpServletRequest request, List<ObjectError> errors) {
+    public PostFieldErrorResponse(HttpServletRequest request, List<ObjectError> errors) {
         super("Post field error", request);
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {
