@@ -12,7 +12,7 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
-public class CacheConfiguration  implements CachingConfigurer {
+public class CacheConfiguration implements CachingConfigurer {
 
     @Bean
     @Override

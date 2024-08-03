@@ -2,6 +2,7 @@ package com.marcuslull.bookmanager.controllers;
 
 import com.marcuslull.bookmanager.dtos.BookDto;
 import com.marcuslull.bookmanager.entities.BookEntity;
+import com.marcuslull.bookmanager.exceptions.DefensiveNullException;
 import com.marcuslull.bookmanager.exceptions.RequestLimitExceededException;
 import com.marcuslull.bookmanager.responses.ApiResponse;
 import com.marcuslull.bookmanager.responses.PostFieldErrorResponse;
@@ -32,12 +33,14 @@ public class BookController {
 
     @GetMapping("/books")
     public ResponseEntity<?> getBooks(HttpServletRequest request, @PageableDefault(sort = "title") Pageable pageable) {
+        defensiveNullCheck(List.of(request, pageable));
         checkRateLimit(request);
         return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAllPaged(pageable)));
     }
 
     @GetMapping("/books/{id}")
     public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable Long id) {
+        defensiveNullCheck(List.of(request));
         checkRateLimit(request);
         BookEntity bookEntity = bookService.findById(id);
         return (bookEntity == null) ?
@@ -47,6 +50,7 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<?> postBooks(HttpServletRequest request, @Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
+        defensiveNullCheck(List.of(request, bindingResult));
         checkRateLimit(request);
         return (bindingResult.hasErrors()) ?
                 ResponseEntity.status(400).body(new PostFieldErrorResponse(request, bindingResult.getAllErrors())) :
@@ -55,6 +59,7 @@ public class BookController {
 
     @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(HttpServletRequest request, @PathVariable Long id) {
+        defensiveNullCheck(List.of(request));
         checkRateLimit(request);
         bookService.deleteById(id);
         return ResponseEntity.noContent().build();
@@ -64,5 +69,13 @@ public class BookController {
         if (rateLimitService.isLimited(request)) {
             throw new RequestLimitExceededException("Too Many Requests");
         }
+    }
+
+    private void defensiveNullCheck(List<Object> objectsList) {
+        objectsList.forEach(object -> {
+            if (object == null) {
+                throw new DefensiveNullException();
+            }
+        });
     }
 }

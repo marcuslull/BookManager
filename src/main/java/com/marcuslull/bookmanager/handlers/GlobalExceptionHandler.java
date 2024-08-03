@@ -1,5 +1,6 @@
 package com.marcuslull.bookmanager.handlers;
 
+import com.marcuslull.bookmanager.exceptions.DefensiveNullException;
 import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
 import com.marcuslull.bookmanager.exceptions.RequestLimitExceededException;
 import com.marcuslull.bookmanager.responses.ApiResponse;
@@ -18,6 +19,13 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(DefensiveNullException.class)
+    public ResponseEntity<?> handleDefensiveNullException(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("An unexpected error occurred", request));
+    }
 
     @ExceptionHandler(RequestLimitExceededException.class)
     public ResponseEntity<?> handleRequestLimitExceededException(Exception ex) {
