@@ -1,9 +1,13 @@
 package com.marcuslull.bookmanager.services;
 
 import com.marcuslull.bookmanager.dtos.BookDto;
+import com.marcuslull.bookmanager.dtos.PageOfBookEntitiesDto;
 import com.marcuslull.bookmanager.entities.BookEntity;
 import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
+import com.marcuslull.bookmanager.mappers.PageableMapper;
 import com.marcuslull.bookmanager.repositories.BookRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +26,9 @@ public class BookService {
         return bookCacheService.cacheBook(id);
     }
 
-    public Iterable<BookEntity> findAll(){
-        return bookRepository.findAll();
+    public PageOfBookEntitiesDto findAllPaged(Pageable pageable){
+        Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable);
+        return PageableMapper.pageableToPageableBookDto(pageOfBookEntities);
     }
 
     public Iterable<BookEntity> saveAll(List<BookDto> bookDtos) {

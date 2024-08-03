@@ -10,6 +10,8 @@ import com.marcuslull.bookmanager.services.BookService;
 import com.marcuslull.bookmanager.services.RateLimitService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +31,9 @@ public class BookController {
     }
 
     @GetMapping("/books")
-    public ResponseEntity<?> getBooks(HttpServletRequest request) {
-        // TODO: Pagination
+    public ResponseEntity<?> getBooks(HttpServletRequest request, @PageableDefault(sort = "title") Pageable pageable) {
         checkRateLimit(request);
-        return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAll()));
+        return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAllPaged(pageable)));
     }
 
     @GetMapping("/books/{id}")
