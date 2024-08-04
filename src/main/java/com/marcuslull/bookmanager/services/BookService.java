@@ -3,6 +3,7 @@ package com.marcuslull.bookmanager.services;
 import com.marcuslull.bookmanager.dtos.BookDto;
 import com.marcuslull.bookmanager.dtos.PageOfBookEntitiesDto;
 import com.marcuslull.bookmanager.entities.BookEntity;
+import com.marcuslull.bookmanager.exceptions.DefensiveNullException;
 import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
 import com.marcuslull.bookmanager.mappers.PageableMapper;
 import com.marcuslull.bookmanager.repositories.BookRepository;
@@ -24,16 +25,19 @@ public class BookService {
     }
 
     public BookEntity findById(Long id) {
+        defensiveNullCheck(List.of(id));
         return bookCacheService.cacheBook(id);
     }
 
     public PageOfBookEntitiesDto findAllPaged(Pageable pageable){
+        defensiveNullCheck(List.of(pageable));
         Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable);
         return PageableMapper.pageableToPageableBookDto(pageOfBookEntities);
     }
 
     @Transactional
     public Iterable<BookEntity> saveAll(List<BookDto> bookDtos) {
+        defensiveNullCheck(List.of(bookDtos));
         List<BookEntity> bookEntities = bookDtos.stream().map(BookEntity::fromDto).toList();
         bookEntities = bookDeduplication(bookEntities);
         if (bookEntities.isEmpty()){
@@ -46,6 +50,7 @@ public class BookService {
 
     @Transactional
     public void deleteById(Long id) {
+        defensiveNullCheck(List.of(id));
         bookCacheService.cacheEvictBook(id);
         bookRepository.deleteById(id);
     }
@@ -58,5 +63,13 @@ public class BookService {
 
     private List<BookEntity> bookDeduplication(List<BookEntity> bookEntities) {
         return bookEntities.stream().filter(book -> !bookRepository.existsByDedupeId(book.getDedupeId())).toList();
+    }
+
+    private void defensiveNullCheck(List<Object> objectsList) {
+        objectsList.forEach(object -> {
+            if (object == null) {
+                throw new DefensiveNullException();
+            }
+        });
     }
 }

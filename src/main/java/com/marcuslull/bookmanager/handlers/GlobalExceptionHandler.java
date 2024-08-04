@@ -22,36 +22,39 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DefensiveNullException.class)
     public ResponseEntity<?> handleDefensiveNullException(Exception ex) {
-        log.error(ex.getMessage(), ex);
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("An unexpected error occurred", request));
+        logIt(ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("An unexpected error occurred", getRequest()));
     }
 
     @ExceptionHandler(RequestLimitExceededException.class)
     public ResponseEntity<?> handleRequestLimitExceededException(Exception ex) {
-        log.error(ex.getMessage(), ex);
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(new ApiResponse(ex.getMessage(), request));
+        logIt(ex);
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(new ApiResponse(ex.getMessage(), getRequest()));
     }
 
     @ExceptionHandler(DuplicateEntityException.class)
     public ResponseEntity<?> handleDuplicateEntityException(Exception ex) {
-        log.error(ex.getMessage(), ex);
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(ex.getMessage(), request));
+        logIt(ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse(ex.getMessage(), getRequest()));
     }
 
     @ExceptionHandler({NoResourceFoundException.class, MethodArgumentTypeMismatchException.class})
     public ResponseEntity<?> handleNoResourceFoundException(NoResourceFoundException ex) {
-        log.error("Resource path not found: {}", ex.getMessage(), ex);
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UnexpectedExceptionResponse("Resource path not found", request));
+        logIt(ex);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UnexpectedExceptionResponse("Resource path not found", getRequest()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleException(Exception ex) {
-        log.error("An unexpected error occurred: {}", ex.getMessage(), ex);
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnexpectedExceptionResponse("An unexpected error occurred", request));
+        logIt(ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new UnexpectedExceptionResponse("An unexpected error occurred", getRequest()));
+    }
+
+    private void logIt(Exception ex) {
+        log.error(ex.getMessage(), ex);
+    }
+
+    private HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 }
