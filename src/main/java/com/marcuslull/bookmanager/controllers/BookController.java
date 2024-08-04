@@ -40,7 +40,7 @@ public class BookController {
 
     @GetMapping("/books/{id}")
     public ResponseEntity<?> getBook(HttpServletRequest request, @PathVariable Long id) {
-        defensiveNullCheck(List.of(request));
+        defensiveNullCheck(List.of(request, id));
         checkRateLimit(request);
         BookEntity bookEntity = bookService.findById(id);
         return (bookEntity == null) ?
@@ -50,7 +50,7 @@ public class BookController {
 
     @PostMapping("/books")
     public ResponseEntity<?> postBooks(HttpServletRequest request, @Valid @RequestBody List<BookDto> bookDtos, BindingResult bindingResult) {
-        defensiveNullCheck(List.of(request, bindingResult));
+        defensiveNullCheck(List.of(request, bookDtos, bindingResult));
         checkRateLimit(request);
         return (bindingResult.hasErrors()) ?
                 ResponseEntity.status(400).body(new PostFieldErrorResponse(request, bindingResult.getAllErrors())) :
@@ -59,13 +59,14 @@ public class BookController {
 
     @DeleteMapping("/books/{id}")
     public ResponseEntity<?> deleteBook(HttpServletRequest request, @PathVariable Long id) {
-        defensiveNullCheck(List.of(request));
+        defensiveNullCheck(List.of(request, id));
         checkRateLimit(request);
         bookService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     private void checkRateLimit(HttpServletRequest request) {
+        defensiveNullCheck(List.of(request));
         if (rateLimitService.isLimited(request)) {
             throw new RequestLimitExceededException("Too Many Requests");
         }

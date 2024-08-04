@@ -6,6 +6,7 @@ import com.marcuslull.bookmanager.entities.BookEntity;
 import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
 import com.marcuslull.bookmanager.mappers.PageableMapper;
 import com.marcuslull.bookmanager.repositories.BookRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class BookService {
         return PageableMapper.pageableToPageableBookDto(pageOfBookEntities);
     }
 
+    @Transactional
     public Iterable<BookEntity> saveAll(List<BookDto> bookDtos) {
         List<BookEntity> bookEntities = bookDtos.stream().map(BookEntity::fromDto).toList();
         bookEntities = bookDeduplication(bookEntities);
@@ -42,6 +44,7 @@ public class BookService {
         return result;
     }
 
+    @Transactional
     public void deleteById(Long id) {
         bookCacheService.cacheEvictBook(id);
         bookRepository.deleteById(id);
