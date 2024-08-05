@@ -18,7 +18,6 @@ public class BookCacheService {
 
     @Cacheable(value = "books", key = "#id", sync = true)
     public BookEntity cacheBook(Long id) {
-        System.out.println("DB Call");
         return bookRepository.findById(id).orElse(null);
     }
 
