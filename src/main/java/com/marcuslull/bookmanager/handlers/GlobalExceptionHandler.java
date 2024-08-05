@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -19,6 +20,12 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(Exception ex) {
+        logIt(ex);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse("HTTP message body not readable", getRequest()));
+    }
 
     @ExceptionHandler(DefensiveNullException.class)
     public ResponseEntity<?> handleDefensiveNullException(Exception ex) {

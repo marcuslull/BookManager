@@ -1,7 +1,7 @@
 package com.marcuslull.bookmanager.services;
 
 import com.marcuslull.bookmanager.dtos.BookDto;
-import com.marcuslull.bookmanager.dtos.PageOfBookEntitiesDto;
+import com.marcuslull.bookmanager.dtos.PageDto;
 import com.marcuslull.bookmanager.entities.BookEntity;
 import com.marcuslull.bookmanager.exceptions.DefensiveNullException;
 import com.marcuslull.bookmanager.exceptions.DuplicateEntityException;
@@ -29,10 +29,10 @@ public class BookService {
         return bookCacheService.cacheBook(id);
     }
 
-    public PageOfBookEntitiesDto findAllPaged(Pageable pageable){
+    public PageDto findAllPaged(Pageable pageable){
         defensiveNullCheck(List.of(pageable));
         Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable);
-        return PageableMapper.pageableToPageableBookDto(pageOfBookEntities);
+        return PageableMapper.pageableToPageDto(pageOfBookEntities);
     }
 
     @Transactional

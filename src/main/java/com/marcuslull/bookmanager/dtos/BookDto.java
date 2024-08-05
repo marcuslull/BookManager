@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 public record BookDto(
         @NotNull @Size(min = 2, max = 50) String title,
+        @NotNull @Size(min = 2, max = 50) String author,
         @NotNull @Digits(integer = 4, fraction = 0) @Positive Integer pages,
         @NotNull @Digits(integer = 2, fraction = 0)
             @Positive(message = "must be > 0. Single books should be book 1") Integer bookNumber,

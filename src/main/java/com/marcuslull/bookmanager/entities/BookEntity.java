@@ -25,6 +25,9 @@ public class BookEntity {
     @Column @NotNull @Size(min = 2, max = 50)
     private String title;
 
+    @Column @NotNull @Size(min = 3, max = 50)
+    private String author;
+
     @Column @NotNull @Digits(integer = 4, fraction = 0) @Positive
     private Integer pages;
 
@@ -38,8 +41,9 @@ public class BookEntity {
     @Column
     private String dedupeId;
 
-    public BookEntity(String title, Integer pages, Integer bookNumber, Boolean finished) {
+    public BookEntity(String title, String author, Integer pages, Integer bookNumber, Boolean finished) {
         this.title = title;
+        this.author = author;
         this.pages = pages;
         this.bookNumber = bookNumber;
         this.finished = finished;
@@ -48,10 +52,10 @@ public class BookEntity {
     }
 
     public static BookEntity fromDto(@Valid BookDto bookDto) {
-        return new BookEntity(bookDto.title(), bookDto.pages(), bookDto.bookNumber(), bookDto.finished());
+        return new BookEntity(bookDto.title(), bookDto.author(), bookDto.pages(), bookDto.bookNumber(), bookDto.finished());
     }
 
     public static BookDto toDto(@Valid BookEntity bookEntity) {
-        return new BookDto(bookEntity.getTitle(), bookEntity.getPages(), bookEntity.getBookNumber(), bookEntity.getFinished());
+        return new BookDto(bookEntity.getTitle(), bookEntity.getAuthor(), bookEntity.getPages(), bookEntity.getBookNumber(), bookEntity.getFinished());
     }
 }
