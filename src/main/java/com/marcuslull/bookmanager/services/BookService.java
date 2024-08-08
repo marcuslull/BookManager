@@ -26,12 +26,13 @@ public class BookService {
 
     public BookEntity findById(Long id) {
         defensiveNullCheck(List.of(id));
-        return bookCacheService.cacheBook(id);
+        return bookCacheService.findBookById(id);
     }
 
     public PageDto findAllPaged(Pageable pageable){
         defensiveNullCheck(List.of(pageable));
-        Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable);
+        int pageNumber = pageable.getPageNumber();
+        Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable.withPage(pageNumber - 1));
         return PageableMapper.pageableToPageDto(pageOfBookEntities);
     }
 
@@ -40,9 +41,6 @@ public class BookService {
         defensiveNullCheck(List.of(bookDtos));
         List<BookEntity> bookEntities = bookDtos.stream().map(BookEntity::fromDto).toList();
         bookEntities = bookDeduplication(bookEntities);
-        if (bookEntities.isEmpty()){
-            throw new DuplicateEntityException("Book(s) already exists");
-        }
         Iterable<BookEntity> result = bookRepository.saveAll(bookEntities);
         cachePut(result);
         return result;
@@ -57,12 +55,17 @@ public class BookService {
 
     private void cachePut(Iterable<BookEntity> bookEntities) {
         for(BookEntity bookEntity : bookEntities) {
-            bookCacheService.cachePutBook(bookEntity);
+            bookCacheService.putBook(bookEntity);
         }
     }
 
     private List<BookEntity> bookDeduplication(List<BookEntity> bookEntities) {
-        return bookEntities.stream().filter(book -> !bookRepository.existsByDedupeId(book.getDedupeId())).toList();
+        List<BookEntity> deduplicatedList = bookEntities.stream().filter(book ->
+                !bookRepository.existsByDedupeId(book.getDedupeId())).toList();
+        if (deduplicatedList.isEmpty()) {
+            throw new DuplicateEntityException("Book(s) already exist");
+        }
+        return deduplicatedList;
     }
 
     private void defensiveNullCheck(List<Object> objectsList) {

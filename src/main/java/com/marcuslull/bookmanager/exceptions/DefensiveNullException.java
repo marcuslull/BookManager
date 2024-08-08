@@ -1,7 +1,9 @@
 package com.marcuslull.bookmanager.exceptions;
 
 public class DefensiveNullException extends RuntimeException {
+    private static final String NULL_MESSAGE = "Assumed controller argument is null";
+
     public DefensiveNullException(){
-        super("Assumed controller argument is null");
+        super(NULL_MESSAGE);
     }
 }

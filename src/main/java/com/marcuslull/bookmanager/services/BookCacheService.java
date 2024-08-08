@@ -17,17 +17,15 @@ public class BookCacheService {
     }
 
     @Cacheable(value = "books", key = "#id", sync = true)
-    public BookEntity cacheBook(Long id) {
+    public BookEntity findBookById(Long id) {
         return bookRepository.findById(id).orElse(null);
     }
 
     @CachePut(value = "books", key = "#bookEntity.getId()")
-    public BookEntity cachePutBook(BookEntity bookEntity) {
+    public BookEntity putBook(BookEntity bookEntity) {
         return bookEntity;
     }
 
     @CacheEvict(value = "books", key = "#id")
-    public Long cacheEvictBook(Long id) {
-        return id;
-    }
+    public void cacheEvictBook(Long id) {}
 }

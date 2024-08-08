@@ -16,6 +16,10 @@ public class PostFieldErrorResponse extends ApiResponse {
 
     public PostFieldErrorResponse(HttpServletRequest request, List<ObjectError> errors) {
         super("Post field error", request);
+        this.errorMessages = extractErrorMessages(errors);
+    }
+
+    private List<String> extractErrorMessages(List<ObjectError> errors) {
         this.errorMessages = new ArrayList<>();
         for (ObjectError error : errors) {
             if (error instanceof FieldError fieldError) {
@@ -26,5 +30,6 @@ public class PostFieldErrorResponse extends ApiResponse {
                 this.errorMessages.add(error.getDefaultMessage());
             }
         }
+        return errorMessages;
     }
 }
