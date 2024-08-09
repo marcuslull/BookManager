@@ -33,7 +33,6 @@ public class BookController {
 
     @GetMapping("/books")
     public ResponseEntity<?> getBooks(HttpServletRequest request, @PageableDefault(sort = "title") Pageable pageable) {
-        // TODO: This does not display a single book in content
         defensiveNullCheck(List.of(request, pageable));
         checkRateLimit(request);
         return ResponseEntity.status(200).body(new SuccessResponse<>(request, bookService.findAllPaged(pageable)));
