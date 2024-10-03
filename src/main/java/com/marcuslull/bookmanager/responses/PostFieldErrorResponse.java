@@ -9,6 +9,27 @@ import org.springframework.validation.ObjectError;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents an API response for handling field validation errors encountered during POST requests.
+ * <p>
+ * This class extends the {@code ApiResponse} class to include:
+ * <ul>
+ *   <li><b>errorMessages</b>: A list of error messages describing the validation issues found.</li>
+ * </ul>
+ * </p>
+ * <p>
+ * This class provides a standardized format for returning validation error information to the client.
+ * It extracts error messages from the provided list of {@code ObjectError} instances.
+ * </p>
+ * <p>
+ * Usage: This class is particularly useful when validating user inputs in a POST request, such as
+ * creating or updating resources, and responding with detailed validation errors.
+ * </p>
+ *
+ * @see ApiResponse
+ * @see FieldError
+ * @see ObjectError
+ */
 @Getter
 @Setter
 public class PostFieldErrorResponse extends ApiResponse {
