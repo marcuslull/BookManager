@@ -3,9 +3,13 @@ package com.marcuslull.bookmanager.dtos;
 import java.util.List;
 
 /**
- * <p>
  * Represents a page of data in a paginated response.
+ * <p>
+ * This class is used for transferring page data across various layers of the application,
+ * such as controllers and services.
  * </p>
+ *
+ * <p><b>Fields:</b></p>
  * <ul>
  *     <li>{@code totalPages} &ndash; the total number of pages available</li>
  *     <li>{@code totalElements} &ndash; the total number of elements available</li>

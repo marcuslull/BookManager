@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
      * It logs the exception details and returns a response entity with a status of 400 BAD REQUEST.
      *
      * @param ex The exception that occurred while reading the HTTP message.
-     * @return A {@link ResponseEntity} containing the status of the error and a detailed {@link ApiResponse}.
+     * @return A ResponseEntity containing the status of the error and a detailed ApiResponse.
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -59,7 +59,7 @@ public class GlobalExceptionHandler {
      * <p>The response entity contains a detailed {@link ApiResponse} that provides information about the error and the request.
      *
      * @param ex The exception that occurred, specifically an instance of {@link DefensiveNullException}.
-     * @return A {@link ResponseEntity} containing the HTTP status of the error and a detailed {@link ApiResponse}.
+     * @return A ResponseEntity containing the HTTP status of the error and a detailed ApiResponse.
      */
     @ExceptionHandler(DefensiveNullException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -69,12 +69,12 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * Handles the RequestLimitExceededException and returns a response entity with status code 429 (Too Many Requests).
+     * Handles the {@link RequestLimitExceededException} and returns a response entity with status code 429 (Too Many Requests).
      *
      * <p>This method logs the exception and formats a response entity containing the exception's message and the current request information.</p>
      *
      * @param ex The exception that was thrown. Expected to be of type RequestLimitExceededException.
-     * @return ResponseEntity containing an error message and request details, with HTTP status 429.
+     * @return A ResponseEntity containing an error message and request details, with HTTP status 429.
      */
     @ExceptionHandler(RequestLimitExceededException.class)
     @ResponseStatus(HttpStatus.TOO_MANY_REQUESTS)
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
      * It logs the exception and returns a standardized API response.
      *
      * @param ex the exception that was thrown
-     * @return a ResponseEntity containing an ApiResponse with a conflict status and a message
+     * @return A ResponseEntity containing an ApiResponse with a conflict status and a message
      */
     @ExceptionHandler(DuplicateEntityException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -107,7 +107,7 @@ public class GlobalExceptionHandler {
      * containing an UnexpectedExceptionResponse message indicating that the resource path was not found.
      *
      * @param ex the exception that was thrown
-     * @return ResponseEntity containing the HTTP status NOT_FOUND and an UnexpectedExceptionResponse message
+     * @return A ResponseEntity containing the HTTP status NOT_FOUND and an UnexpectedExceptionResponse message
      */
     @ExceptionHandler({NoResourceFoundException.class, MethodArgumentTypeMismatchException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -124,7 +124,7 @@ public class GlobalExceptionHandler {
      * containing an error message and the current request details.</p>
      *
      * @param ex The exception that was thrown.
-     * @return A {@link ResponseEntity} object containing an {@link UnexpectedExceptionResponse}
+     * @return A ResponseEntity object containing an UnexpectedExceptionResponse
      *         body with the error message and request details.
      */
     @ExceptionHandler(Exception.class)

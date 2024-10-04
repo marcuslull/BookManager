@@ -1,7 +1,6 @@
 package com.marcuslull.bookmanager.dtos;
 
 
-import com.marcuslull.bookmanager.entities.BookEntity;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
