@@ -10,20 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
-/**
- * Configuration class for setting up caching in the application.
- * <p>
- * This class enables caching and provides a custom configuration
- * for the cache manager using the Caffeine caching library.
- * </p>
- * <p>
- * Key configurations:
- * <ul>
- *   <li>Cache Name: books</li>
- *   <li>Cache Expiry Time: 10 minutes</li>
- * </ul>
- * </p>
- */
+
 @Configuration
 @EnableCaching
 public class CacheConfiguration implements CachingConfigurer {

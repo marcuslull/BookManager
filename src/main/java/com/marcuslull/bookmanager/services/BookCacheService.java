@@ -1,9 +1,6 @@
 package com.marcuslull.bookmanager.services;
 
 import com.marcuslull.bookmanager.entities.BookEntity;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 
 /**
  * Service interface for caching book entities.
