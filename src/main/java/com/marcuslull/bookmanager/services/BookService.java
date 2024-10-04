@@ -74,7 +74,7 @@ public class BookService {
     public PageDto findAllPaged(Pageable pageable){
         defensiveNullCheck(List.of(pageable));
         int pageNumber = pageable.getPageNumber();
-        Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable.withPage(pageNumber - 1));
+        Page<BookEntity> pageOfBookEntities =  bookRepository.findAll(pageable.withPage(pageNumber));
         return PageableMapper.pageableToPageDto(pageOfBookEntities);
     }
 
